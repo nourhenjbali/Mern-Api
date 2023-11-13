@@ -1,6 +1,7 @@
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
-
+// hotel CRUD
+// create hotel
 export const createHotel = async (req, res, next) => {
   const newHotel = new Hotel(req.body);
 
@@ -11,6 +12,7 @@ export const createHotel = async (req, res, next) => {
     next(err);
   }
 };
+// update hotel
 export const updateHotel = async (req, res, next) => {
   try {
     const updatedHotel = await Hotel.findByIdAndUpdate(
@@ -23,6 +25,7 @@ export const updateHotel = async (req, res, next) => {
     next(err);
   }
 };
+// delete hotel
 export const deleteHotel = async (req, res, next) => {
   try {
     await Hotel.findByIdAndDelete(req.params.id);
@@ -31,6 +34,7 @@ export const deleteHotel = async (req, res, next) => {
     next(err);
   }
 };
+// get one hotel
 export const getHotel = async (req, res, next) => {
   try {
     const hotel = await Hotel.findById(req.params.id);
@@ -39,6 +43,7 @@ export const getHotel = async (req, res, next) => {
     next(err);
   }
 };
+// create all hotels
 export const getHotels = async (req, res, next) => {
   const { min, max, ...others } = req.query;
   try {
@@ -51,6 +56,7 @@ export const getHotels = async (req, res, next) => {
     next(err);
   }
 };
+// count by city
 export const countByCity = async (req, res, next) => {
   const cities = req.query.cities.split(",");
   try {
@@ -64,6 +70,7 @@ export const countByCity = async (req, res, next) => {
     next(err);
   }
 };
+// cout by type
 export const countByType = async (req, res, next) => {
   try {
     const hotelCount = await Hotel.countDocuments({ type: "hotel" });
@@ -83,7 +90,7 @@ export const countByType = async (req, res, next) => {
     next(err);
   }
 };
-
+// get hotels rooms
 export const getHotelRooms = async (req, res, next) => {
   try {
     const hotel = await Hotel.findById(req.params.id);
@@ -92,7 +99,7 @@ export const getHotelRooms = async (req, res, next) => {
         return Room.findById(room);
       })
     );
-    res.status(200).json(list)
+    res.status(200).json(list);
   } catch (err) {
     next(err);
   }

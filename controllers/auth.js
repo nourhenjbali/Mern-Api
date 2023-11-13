@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
+// register function
 export const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -19,6 +20,8 @@ export const register = async (req, res, next) => {
     next(err);
   }
 };
+// login function
+
 export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
