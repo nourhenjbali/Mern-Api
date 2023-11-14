@@ -28,7 +28,10 @@ export const updateHotel = async (req, res, next) => {
 // delete hotel
 export const deleteHotel = async (req, res, next) => {
   try {
-    await Hotel.findByIdAndDelete(req.params.id);
+    // anomalie dans le code 
+    const hotelId = req.params.id.trim(); // Trim the ID to remove any leading/trailing spaces
+    await Hotel.findByIdAndDelete(hotelId);
+   // await Hotel.findByIdAndDelete(req.params.id);
     res.status(200).json("Hotel has been deleted.");
   } catch (err) {
     next(err);
