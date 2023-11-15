@@ -20,5 +20,18 @@
     "mongodb": "^6.1.0",
     "mongoose": "^6.3.1",
     "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.js$",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "node"
+    ]
   }
 }
