@@ -3,6 +3,7 @@ import request from "supertest";
 import { app } from "../index.js";
 import Hotel from "../models/Hotel.js";
 
+// test unitaire pour un create hotel
 describe("Hotel Controller", () => {
   it("should create a new hotel", async (done) => {
     const newHotelData = {
