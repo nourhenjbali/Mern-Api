@@ -19,7 +19,6 @@ describe("Auth Controller", () => {
     });
    // console.log("Response:", response.body); // Log the response body
     console.log(response.statusCode);
-
     assert.strictEqual(response.statusCode, 200);
     assert.ok(response.body.details);
     assert.strictEqual(response.body.isAdmin, true);
@@ -29,3 +28,4 @@ describe("Auth Controller", () => {
     // User.findOne.restore();
   }).timeout(10000);
 });
+// this file is auth test unitaire
