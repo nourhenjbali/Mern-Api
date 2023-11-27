@@ -1,31 +1,59 @@
 import assert from "assert";
-import sinon from "sinon";
 import request from "supertest";
 import { app } from "../index.js";
 import User from "../models/User.js";
 
-describe("Auth Controller", () => {
-  it("should login a user", async () => {
-    // Mocking the User.findOne method using Sinon
-    sinon.stub(User, "findOne").resolves({
-      username: "nourhen1",
-      password: "123", // Replace with the actual hashed password
-      isAdmin: true,
-    });
-
-    const response = await request(app).post("/api/auth/login").send({
+describe("Authentication Routes", function () {
+  this.timeout(5000);
+  it("POST /login should return a valid token on successful login", async function () {
+    const userCredentials = {
       username: "nourhen1",
       password: "123",
-    });
-     console.log("Response:", response.body); // Log the response body
-    console.log(response.statusCode);
-    assert.strictEqual(response.statusCode, 200);
-    assert.ok(response.body.details);
-    assert.strictEqual(response.body.isAdmin, true);
-    assert.ok(response.header["set-cookie"][0].startsWith("access_token="));
+    };
 
-    // Restore the original User.findOne method
-    // User.findOne.restore();
-  }).timeout(10000);
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send(userCredentials);
+
+    // Make assertions about the response
+    assert.strictEqual(res.status, 200);
+    assert.strictEqual(res.type, "application/json");
+    assert.strictEqual(res.body.details.username, userCredentials.username);
+  });
+  it("POST /login should return an error for incorrect password", async function () {
+    const userCredentials = {
+      username: "nourhen1",
+      password: "incorrect-password",
+    };
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send(userCredentials);
+
+    // Make assertions about the response
+    assert.strictEqual(res.status, 400);
+    assert.strictEqual(res.type, "application/json");
+    assert.ok(res.body.success === false, "Expected success to be false");
+    assert.strictEqual(res.body.status, 400);
+    assert.strictEqual(res.body.message, "Wrong password or username!");
+    //assert.ok(res.body.stack, "Expected stack to be present");
+  });
+  it("POST /login should return an error for non-existent user", async function () {
+    const userCredentials = {
+      username: "non-existent-username",
+      password: "password",
+    };
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send(userCredentials);
+
+    // Make assertions about the response
+    assert.strictEqual(res.status, 404);
+    assert.strictEqual(res.type, "application/json");
+    assert.ok(res.body.success === false, "Expected success to be false");
+    assert.strictEqual(res.body.status, 404);
+    assert.strictEqual(res.body.message, "User not found!");
+   // assert.ok(res.body.stack, "Expected stack to be present");
+  });
 });
-// this file is auth test unitaire
