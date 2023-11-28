@@ -20,7 +20,7 @@ jobs:
       - name: Push to GitLab
         run:
           git remote add gitlab https://gitlab.com/nourhen-jbali/hotelreservation
-          GITLAB_TOKEN=${{ secrets.GITLAB_TOKEN }} git push gitlab main
+          GITLAB_TOKEN=${{ secrets.TOKEN }}
           git add .
           git commit -m "Sync with GitLab"
           git push gitlab main
