@@ -1,0 +1,21 @@
+name: Sync with GitLab
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Push to GitLab
+        run: |
+          git remote add gitlab https://gitlab.com/nourhen-jbali/hotelreservation
+          git push gitlab main
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
