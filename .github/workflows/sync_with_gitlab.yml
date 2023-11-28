@@ -22,7 +22,7 @@ jobs:
         run:
           git remote add gitlab https://gitlab.com/nourhen-jbali/hotelreservation
           git fetch gitlab
-          git checkout -b main gitlab/main
+          git checkout main gitlab/main
           git add .
           git commit -m "Sync with GitLab"
           git push gitlab main
