@@ -54,6 +54,6 @@ describe("Authentication Routes", function () {
     assert.ok(res.body.success === false, "Expected success to be false");
     assert.strictEqual(res.body.status, 404);
     assert.strictEqual(res.body.message, "User not found!");
-   // assert.ok(res.body.stack, "Expected stack to be present");
+    // assert.ok(res.body.stack, "Expected stack to be present");
   });
 });
